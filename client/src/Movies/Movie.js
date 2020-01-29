@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
-export default class Movie extends React.Component {
+import { connect } from "react-redux";
+import { deleteMovie } from "../actions";
+class Movie extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,12 +39,36 @@ export default class Movie extends React.Component {
     }
 
     return (
-      <div className="save-wrapper">
+      <div className='save-wrapper'>
         <MovieCard movie={this.state.movie} />
-        <div className="save-button" onClick={this.saveMovie}>
+        <div className='save-button' onClick={this.saveMovie}>
           Save
+        </div>
+        <div
+          className='save-button Edit-button'
+          onClick={() =>
+            this.props.history.push(
+              `/update-movie/${this.props.match.params.id}`
+            )
+          }>
+          Edit
+        </div>
+
+        <div
+          className='save-button Delete-button'
+          onClick={() =>
+            this.props.deleteMovie(this.props.match.params.id) &
+            setTimeout(() => {
+              this.props.history.push("/");
+            }, 500)
+          }>
+          Delete
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps, { deleteMovie })(Movie);
