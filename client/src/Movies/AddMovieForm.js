@@ -10,18 +10,18 @@ import {
 } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { FORM_CHANGE } from "../reducers";
-import { editMovie } from "../actions";
+import { addMovie } from "../actions";
 
 const uuidv4 = require("uuid/v4");
 
-const UpdateForm = props => {
+const AddMovieForm = props => {
   const dispatch = useDispatch();
   const movie = useSelector(state => state.movie);
   const [actor, setActor] = useState({ actor: "" });
 
   const handlesubmit = e => {
     e.preventDefault();
-    dispatch(editMovie(movie, props.match.params.id));
+    dispatch(addMovie(movie));
     dispatch({ type: "RESET_FORM" });
     setTimeout(() => {
       props.history.push("/");
@@ -46,7 +46,7 @@ const UpdateForm = props => {
   return (
     <div className='updateForm'>
       <Form onSubmit={handlesubmit}>
-        <h1>Edit Movie</h1>
+        <h1>Add Movie</h1>
         <FormGroup>
           <Label>
             <p> Title </p>
@@ -135,4 +135,4 @@ const UpdateForm = props => {
   );
 };
 
-export default UpdateForm;
+export default AddMovieForm;

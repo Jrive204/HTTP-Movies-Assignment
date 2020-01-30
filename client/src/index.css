@@ -67,6 +67,8 @@ body {
 }
 
 .home-button {
+  display: flex;
+  justify-content: space-between;
   padding: 5px 10px;
   background-color: lightskyblue;
 }
@@ -82,7 +84,7 @@ body {
 }
 
 .Delete-button {
-  top: 180px !important;
+  top: 150px !important;
   background-color: red;
   color: white;
 }
@@ -97,7 +99,6 @@ input {
   outline: none;
 }
 
-.baseline,
 input {
   background-color: #fff;
   font-size: 21px;
@@ -155,4 +156,22 @@ input:focus + .baseline:before {
 
 label {
   font-weight: 600;
+}
+.actor {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5%;
+  text-align: center;
+  justify-content: center;
+}
+
+.updateForm {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.card {
+  align-items: center !important;
 }

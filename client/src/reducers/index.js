@@ -52,6 +52,41 @@ export default (state = initialState, action) => {
         }
       };
 
+    case "EDIT_CHANGE":
+      return {
+        ...state,
+        movie: {
+          ...state.movie,
+          id: action.id,
+          title: action.title,
+          director: action.director,
+          metascore: action.metascore,
+          stars: [...action.stars]
+        }
+      };
+    case "RESET_FORM": {
+      return {
+        ...state,
+        movie: {
+          id: uuidv4(),
+          title: "",
+          director: "",
+          metascore: "",
+          stars: []
+        }
+      };
+    }
+    case "DELETE": {
+      return {
+        ...state,
+        movie: {
+          ...state.movie,
+          stars: state.movie.stars.filter((item, index) => {
+            return index !== action.payload;
+          })
+        }
+      };
+    }
     default:
       return state;
   }

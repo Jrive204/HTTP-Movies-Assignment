@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
 import { connect } from "react-redux";
-import { deleteMovie } from "../actions";
+import { deleteMovie, keepEditfields } from "../actions";
 class Movie extends React.Component {
   constructor(props) {
     super(props);
@@ -47,10 +47,18 @@ class Movie extends React.Component {
         <div
           className='save-button Edit-button'
           onClick={() =>
+            this.props.keepEditfields(
+              this.state.movie.id,
+              this.state.movie.title,
+              this.state.movie.director,
+              this.state.movie.metascore,
+              this.state.movie.stars
+            ) &
             this.props.history.push(
               `/update-movie/${this.props.match.params.id}`
             )
           }>
+          {console.log(this.state.movie.director, "movies")}
           Edit
         </div>
 
@@ -71,4 +79,4 @@ class Movie extends React.Component {
 
 const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps, { deleteMovie })(Movie);
+export default connect(mapStateToProps, { deleteMovie, keepEditfields })(Movie);
