@@ -6,7 +6,10 @@ import {
   FormGroup,
   Button,
   Card,
-  CardTitle
+  CardTitle,
+  Modal,
+  ModalHeader,
+  ModalBody
 } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { FORM_CHANGE } from "../reducers";
@@ -19,13 +22,15 @@ const AddMovieForm = props => {
   const movie = useSelector(state => state.movie);
   const [actor, setActor] = useState({ actor: "" });
 
+  const modal = useSelector(state => state.modal);
+
+  const toggle = () => dispatch({ type: "MODAL" });
+
   const handlesubmit = e => {
     e.preventDefault();
     dispatch(addMovie(movie));
     dispatch({ type: "RESET_FORM" });
-    setTimeout(() => {
-      props.history.push("/");
-    }, 500);
+    setTimeout(() => dispatch({ type: "MODAL" }), 500);
   };
 
   const handlechange = e => {
@@ -45,92 +50,103 @@ const AddMovieForm = props => {
 
   return (
     <div className='updateForm'>
-      <Form onSubmit={handlesubmit}>
-        <h1>Add Movie</h1>
-        <FormGroup>
-          <Label>
-            <p> Title </p>
-            <Input
-              type='text'
-              name='title'
-              value={movie.title}
-              placeholder=' title'
-              onChange={handlechange}
-            />
-            {console.log(movie, "movie")}
-            {console.log(props, "PROPS")}
-          </Label>
-          <Label>
-            <p> Director </p>
-            <Input
-              type='text'
-              name='director'
-              value={movie.director}
-              placeholder=' director'
-              onChange={handlechange}
-            />
-          </Label>
-          <Label>
-            <p> Metascore </p>
-            <Input
-              type='text'
-              name='metascore'
-              value={movie.metascore}
-              placeholder=' metascore'
-              onChange={handlechange}
-            />
-          </Label>
-          <Label>
-            <p> Actor </p>
-            <Input
-              type='text'
-              name='actor'
-              value={actor.actor}
-              placeholder=' stars'
-              onChange={actorhandlechange}
-            />
-          </Label>
-          <Button
-            color='info'
-            size='sm'
-            style={{ marginLeft: "5%" }}
-            onClick={starchange}>
-            ADD <br /> ACTOR
-          </Button>
-          <br />
-          <br />
-          <div>
-            <Button
-              size='lg'
-              color='primary'
-              type='submit'
-              style={{ marginLeft: "18%" }}>
-              SUBMIT
-            </Button>
+      <Modal isOpen={modal} toggle={toggle} backdrop={true} size='lg'>
+        <ModalHeader toggle={toggle}></ModalHeader>
+        <ModalBody>
+          <div className='updateForm'>
+            <Form onSubmit={handlesubmit}>
+              <h1>Add Movie</h1>
+              <FormGroup>
+                <Label>
+                  <p> Title </p>
+                  <Input
+                    type='text'
+                    name='title'
+                    value={movie.title}
+                    placeholder=' title'
+                    onChange={handlechange}
+                  />
+                  {console.log(movie, "movie")}
+                  {console.log(props, "PROPS")}
+                </Label>
+                <Label>
+                  <p> Director </p>
+                  <Input
+                    type='text'
+                    name='director'
+                    value={movie.director}
+                    placeholder=' director'
+                    onChange={handlechange}
+                  />
+                </Label>
+                <Label>
+                  <p> Metascore </p>
+                  <Input
+                    type='text'
+                    name='metascore'
+                    value={movie.metascore}
+                    placeholder=' metascore'
+                    onChange={handlechange}
+                  />
+                </Label>
+                <Label>
+                  <p> Actor </p>
+                  <Input
+                    type='text'
+                    name='actor'
+                    value={actor.actor}
+                    placeholder=' stars'
+                    onChange={actorhandlechange}
+                  />
+                </Label>
+                <Button
+                  color='info'
+                  size='sm'
+                  style={{ marginLeft: "5%" }}
+                  onClick={starchange}>
+                  ADD <br /> ACTOR
+                </Button>
+                <br />
+                <br />
+                <div>
+                  <Button
+                    size='lg'
+                    color='primary'
+                    type='submit'
+                    style={{ marginLeft: "18%" }}>
+                    SUBMIT
+                  </Button>
+                  &nbsp; &nbsp;
+                  <Button color='secondary' onClick={toggle}>
+                    Cancel
+                  </Button>
+                </div>
+              </FormGroup>
+            </Form>
+
+            <div className='actor'>
+              <h2 style={{ width: "100%" }}>Stars</h2>
+              <br />
+              {movie.stars.map((ele, i) => (
+                <Card key={uuidv4()} body outline color='warning'>
+                  <CardTitle>
+                    {console.log(ele, "ele")}
+                    <h2>{ele}</h2>
+                  </CardTitle>
+
+                  <Button
+                    onClick={() => dispatch({ type: "DELETE", payload: i })}
+                    style={{ width: "50%" }}
+                    size='sm'
+                    color='danger'>
+                    X
+                  </Button>
+                </Card>
+              ))}
+            </div>
           </div>
-        </FormGroup>
-      </Form>
-
-      <div className='actor'>
-        <h2 style={{ width: "100%" }}>Stars</h2>
-        <br />
-        {movie.stars.map((ele, i) => (
-          <Card key={uuidv4()} body outline color='warning'>
-            <CardTitle>
-              {console.log(ele, "ele")}
-              <h2>{ele}</h2>
-            </CardTitle>
-
-            <Button
-              onClick={() => dispatch({ type: "DELETE", payload: i })}
-              style={{ width: "50%" }}
-              size='sm'
-              color='danger'>
-              DELETE
-            </Button>
-          </Card>
-        ))}
-      </div>
+        </ModalBody>
+      </Modal>
     </div>
   );
 };

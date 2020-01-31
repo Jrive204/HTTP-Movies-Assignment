@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { Button } from "reactstrap";
-export default class SavedList extends Component {
+import { connect } from "react-redux";
+import { StartLoading } from "../actions";
+
+class SavedList extends Component {
   constructor(props) {
     super(props);
   }
@@ -22,17 +25,16 @@ export default class SavedList extends Component {
             );
           })}
           <div className='home-button'>
-            <Link to='/'>Home</Link>
+            <Link onClick={() => this.props.StartLoading()} to='/'>
+              Home
+            </Link>
           </div>
         </div>
-        <div>
-          <Link to='/Add-movie'>
-            <Button style={{ textAlign: "center", marginLeft: "80%" }}>
-              ADD MOVIE
-            </Button>
-          </Link>
-        </div>
+        <div></div>
       </>
     );
   }
 }
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps, { StartLoading })(SavedList);

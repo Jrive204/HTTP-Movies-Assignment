@@ -6,7 +6,12 @@ import {
   FormGroup,
   Button,
   Card,
-  CardTitle
+  CardTitle,
+  Modal,
+  ModalHeader,
+  Alert,
+  ModalBody,
+  ModalFooter
 } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { FORM_CHANGE } from "../reducers";
@@ -25,7 +30,8 @@ const UpdateForm = props => {
     dispatch({ type: "RESET_FORM" });
     setTimeout(() => {
       props.history.push("/");
-    }, 500);
+      dispatch({ type: "LOADING_FALSE" });
+    }, 200);
   };
 
   const handlechange = e => {

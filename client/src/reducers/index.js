@@ -2,6 +2,7 @@ const uuidv4 = require("uuid/v4");
 export const FORM_CHANGE = "FORM_CHANGE";
 
 const initialState = {
+  modal: false,
   isloading: false,
   movies: [],
   error: {},
@@ -87,6 +88,22 @@ export default (state = initialState, action) => {
         }
       };
     }
+    case "MODAL":
+      return {
+        ...state,
+        modal: !state.modal
+      };
+    case "LOADING":
+      return {
+        ...state,
+        isloading: true
+      };
+    case "LOADING_FALSE":
+      return {
+        ...state,
+        isloading: false
+      };
+
     default:
       return state;
   }

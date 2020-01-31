@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
 import { connect } from "react-redux";
-import { deleteMovie, keepEditfields } from "../actions";
+import { deleteMovie, keepEditfields, StopLoading } from "../actions";
 class Movie extends React.Component {
   constructor(props) {
     super(props);
@@ -56,7 +56,8 @@ class Movie extends React.Component {
             ) &
             this.props.history.push(
               `/update-movie/${this.props.match.params.id}`
-            )
+            ) &
+            this.props.StopLoading()
           }>
           {console.log(this.state.movie.director, "movies")}
           Edit
@@ -79,4 +80,8 @@ class Movie extends React.Component {
 
 const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps, { deleteMovie, keepEditfields })(Movie);
+export default connect(mapStateToProps, {
+  StopLoading,
+  deleteMovie,
+  keepEditfields
+})(Movie);

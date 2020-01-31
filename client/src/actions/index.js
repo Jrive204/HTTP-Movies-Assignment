@@ -55,6 +55,17 @@ export const keepEditfields = (ids, titles, directors, metascores, star) => {
     stars: star
   };
 };
+export const StopLoading = () => {
+  return {
+    type: "LOADING"
+  };
+};
+
+export const StartLoading = () => {
+  return {
+    type: "LOADING_FALSE"
+  };
+};
 
 // id: uuidv4(),
 // title: "",
